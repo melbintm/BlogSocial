@@ -1,0 +1,241 @@
+<?php
+    include_once 'includes/register.inc.php';
+    include_once 'includes/functions.php';
+?>
+
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset='UTF-8'>
+        <title>Create new account</title>
+        <link href="css/metro-bootstrap.css" rel="stylesheet">
+        <link href="css/metro-bootstrap-responsive.css" rel="stylesheet">
+        <link href="css/iconFont.css" rel="stylesheet">
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+        <!--<link href="js/prettify/prettify.css" rel="stylesheet">
+        <link rel="stylesheet" href="css/style.css">-->
+
+        <!-- Load JavaScript Libraries -->
+        
+        <script type="text/JavaScript" src="js/sha512.js"></script>
+        <script type="text/JavaScript" src="js/form.js"></script>
+
+        <script src="js/jquery/jquery.min.js"></script>
+        <script src="js/jquery/jquery.widget.min.js"></script>
+        <script src="js/jquery/jquery.mousewheel.js"></script>
+        <!--<script src="js/prettify/prettify.js"></script>-->
+
+        <!-- Metro UI CSS JavaScript plugins -->
+        <script src="js/load-metro.js"></script>
+
+        <!-- Local JavaScript -->
+        <!--<script src="js/docs.js"></script>
+        <script src="js/github.info.js"></script>-->
+    </head>
+    <body class="metro">
+        <div class="container">
+            <header>
+                <h2>Blog+Social</h2>
+            </header>
+            <main>
+                <h1>Create an account</h1>
+                <p>If you already created an account click here to login. Otherwise, create a new account.</p>
+                <?php
+                        if(!empty($error_msg))
+                        {
+                            echo($error_msg);
+                        }
+                    ?>
+                <form action="<?php echo esc_url($_SERVER['PHP_SELF']); ?>" method="post" name="registration_form">
+                    <label for="Name">Name</label>
+                    <div class="grid">
+                        <div class="row">
+                            <div class="span3">
+                                <div class="input-control text">
+                                    <input type="text" nmae="first_name"
+                                    id="first_name" placeholder="First">
+                                </div>    
+                            </div>
+                            <div class="span3">
+                                <div class="input-control text">
+                                    <input type="text" name="last_name"
+                                    id="last_name" placeholder="Last">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <label for="username">User name</label>
+                    <div class="input-control text size6">
+                        <input type="text" name="username" id="username">
+                    </div>
+                    <label for="email">Email</label>
+                    <div class="input-control text size6">
+                        <input type="text" name="email" id="email">
+                    </div>
+                    <label for="password">Create password</label>
+                    <div class="input-control text size6">
+                        <input type="text" name="password" id="password">
+                    </div>
+
+                    <label for="confirmpwd">Reenter password</label>
+                    <div class="input-control text size6">
+                        <input type="text" name="confirmpwd" id="confirmpwd">
+                    </div>
+                    
+                    <label for="">Birthdate</label>
+                    <div class="grid">
+                        <div class="row">
+                            <div class="span2">
+                                <div class="input-control select">
+                                    <select name="month" id="month">
+                                        <option value="">Month</option>
+                                        <option value="">January</option>
+                                        <option value="">February</option>
+                                        <option value="">March</option>
+                                        <option value="">April</option>
+                                        <option value="">May</option>
+                                        <option value="">June</option>
+                                        <option value="">July</option>
+                                        <option value="">August</option>
+                                        <option value="">September</option>
+                                        <option value="">Octobar</option>
+                                        <option value="">November</option>
+                                        <option value="">December</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="span2">
+                                <div class="input-control select">
+                                    <select name="day" id="day">
+                                        <option value="">Day</option>
+                                        <option value="">1</option>
+                                        <option value="">2</option>
+                                        <option value="">3</option>
+                                        <option value="">4</option>
+                                        <option value="">5</option>
+                                        <option value="">6</option>
+                                        <option value="">7</option>
+                                        <option value="">8</option>
+                                        <option value="">9</option>
+                                        <option value="">10</option>
+                                        <option value="">11</option>
+                                        <option value="">12</option>
+                                        <option value="">13</option>
+                                        <option value="">14</option>
+                                        <option value="">15</option>
+                                        <option value="">16</option>
+                                        <option value="">17</option>
+                                        <option value="">18</option>
+                                        <option value="">19</option>
+                                        <option value="">20</option>
+                                        <option value="">21</option>
+                                        <option value="">22</option>
+                                        <option value="">23</option>
+                                        <option value="">24</option>
+                                        <option value="">25</option>
+                                        <option value="">26</option>
+                                        <option value="">27</option>
+                                        <option value="">28</option>
+                                        <option value="">29</option>
+                                        <option value="">30</option>
+                                        <option value="">31</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="span2">
+                                <div class="input-control select">
+                                    <select name="year" id="year">
+                                        <option value="">Year</option>
+                                        <option value="#">2015</option>
+                                        <option value="#">2014</option>
+                                        <option value="#">2013</option>
+                                        <option value="#">2012</option>
+                                        <option value="#">2011</option>
+                                        <option value="#">2010</option>
+                                        <option value="#">2009</option>
+                                        <option value="#">2008</option>
+                                        <option value="#">2007</option>
+                                        <option value="#">2006</option>
+                                        <option value="#">2005</option>
+                                        <option value="#">2004</option>
+                                        <option value="#">2003</option>
+                                        <option value="#">2002</option>
+                                        <option value="#">2001</option>
+                                        <option value="#">2000</option>
+                                        <option value="#">1999</option>
+                                        <option value="#">1998</option>
+                                        <option value="#">1997</option>
+                                        <option value="#">1996</option>
+                                        <option value="#">1995</option>
+                                        <option value="#">1994</option>
+                                        <option value="#">1993</option>
+                                        <option value="#">1992</option>
+                                        <option value="#">1991</option>
+                                        <option value="#">1990</option>
+                                        <option value="#">1989</option>
+                                        <option value="#">1988</option>
+                                        <option value="#">1987</option>
+                                        <option value="#">1986</option>
+                                        <option value="#">1985</option>
+                                        <option value="#">1984</option>
+                                        <option value="#">1983</option>
+                                        <option value="#">1982</option>
+                                        <option value="#">1981</option>
+                                        <option value="#">1980</option>
+                                        <option value="#">1979</option>
+                                        <option value="#">1978</option>
+                                        <option value="#">1977</option>
+                                        <option value="#">1976</option>
+                                        <option value="#">1975</option>
+                                        <option value="#">1974</option>
+                                        <option value="#">1973</option>
+                                        <option value="#">1972</option>
+                                        <option value="#">1971</option>
+                                        <option value="#">1970</option>
+                                        <option value="#">1969</option>
+                                        <option value="#">1968</option>
+                                        <option value="#">1967</option>
+                                        <option value="#">1966</option>
+                                        <option value="#">1965</option>
+                                        <option value="#">1964</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    
+
+                    <label for="gender">Gender</label>
+                    <div class="input-control select size6">
+                        <select name="gender" id="gender">
+                            <option value="">Select...</option>
+                            <option value="">Male</option>
+                            <option value="">Gender</option>
+                        </select>
+                    </div>
+                    <label for="phone">Phone no.</label>
+                    <div class="input-control text size6">
+                        <input type="text" name="phone" id="phone">
+                    </div>
+                    <p>Click Create account to agree to the Blog+Social Agreement.</p>
+                    <p>
+                    <input type="button" class="primary" value="Create account" onclick="return regformhash(this.form,
+                                this.form.username,
+                                this.form.email,
+                                this.form.password,
+                                this.form.confirmpwd,
+                                this.form.first_name,
+                                this.form.last_name,
+                                this.form.month,
+                                this.form.day,
+                                this.form.year,
+                                this.form.gender,
+                                this.form.phone);" />
+                </form>
+            </main>
+        </div>
+    </body>
+</html>
