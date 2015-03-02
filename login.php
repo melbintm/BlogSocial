@@ -4,7 +4,7 @@ include_once 'includes/login.inc.php';
  
 if (login_check($mysqli) == true) {
     error_log("Looged in");
-    header('Location: ./index.html');
+    header('Location: ./index.php');
 } else {
     error_log("Not Logged in");
     $logged = 'out';

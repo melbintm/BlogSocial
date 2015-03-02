@@ -8,6 +8,10 @@ if (login_check($mysqli) == true)
 {
     $login = true;
 }
+else
+{
+    $login = false;
+}
 ?>
 
 
@@ -27,6 +31,8 @@ if (login_check($mysqli) == true)
         <script src="js/jquery/jquery.widget.min.js"></script>
         <script src="js/jquery/jquery.mousewheel.js"></script>
         <!--<script src="js/prettify/prettify.js"></script>-->
+
+        <script src="js/main.js"></script>
 
         <!-- Metro UI CSS JavaScript plugins -->
         <script src="js/load-metro.js"></script>
@@ -49,7 +55,7 @@ if (login_check($mysqli) == true)
                     <?php
                         if ($login==true) {
                             echo '  <div class="element place-right">
-                                        <a href="#"><span class="icon-user"></span></a>
+                                        <a href="includes/logout.php"><span class="icon-switch"></span></a>
                                     </div>
                                     <div class="element place-right">
                                         <a href="#"><span class="icon-cog"></span></a>
@@ -61,7 +67,7 @@ if (login_check($mysqli) == true)
                         else
                         {
                             echo '  <div class="element place-right">
-                                        <a href="#"><span class="icon-enter-2"></span></a>
+                                        <a href="login.php"><span class="icon-enter-2"></span></a>
                                     </div>';
                         }
 
@@ -101,6 +107,36 @@ if (login_check($mysqli) == true)
                     <div class="row">
                         <div class="span4">
                             <nav class="sidebar light">
+
+
+                                <?php
+                                    if($login==true)
+                                    {
+                                        echo '<ul>
+                                                <li class="title">Reader</li>
+                                                <li class="active">
+                                                    <a href="javascript:call_timeline();">
+                                                        Timeline
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="#">
+                                                        Trending
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="#">Bookmarked</a>
+                                                </li>
+                                            </ul>';
+                                    }
+                                    else 
+                                    {
+                                        echo '<ul>
+                                                <li class="title">Reader</li>
+                                                <li class="active"><a href="#">Trending</a></li>
+                                            </ul>';
+                                    }
+                                ?>
                                 <!-- <ul>
                                     <li class="title">Reader</li>
                                     <li class="active">
@@ -118,10 +154,10 @@ if (login_check($mysqli) == true)
                                     </li>
                                 </ul> -->
 
-                                <ul>
+                                <!-- <ul>
                                     <li class="title">Reader</li>
                                     <li class="active"><a href="#">Trending</a></li>
-                                </ul>
+                                </ul> -->
                             </nav>
                         </div>
                         <div class="span8" lstyle="background-color: red">
@@ -185,6 +221,7 @@ if (login_check($mysqli) == true)
                                 </div>
                             </div>
 
+
                             <div class="me_result" lstyle="background-color: green;">
                                 <div class="news">
                                     <div class="content">
@@ -204,6 +241,44 @@ if (login_check($mysqli) == true)
                                 </div>
                             </div>
 
+
+                            <div class="me_result" lstyle="background-color: green;">
+                                <div class="news">
+                                    <div class="content">
+                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere suscipit iste assumenda cupiditate dolores asperiores!
+                                    </div>
+                                    <div class="sub">
+                                        Lorem ipsum dolor sit amet.
+                                    </div>
+                                </div>
+                                <div class="options">
+                                    <div class="toolbar transparent fg-gray">
+                                        <button><i></i>Like</button>
+                                        <button><i></i>Share</button>
+                                        <button><i></i>Reblog</button>
+                                        <button><i></i>Comment</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="me_result" lstyle="background-color: green;">
+                                <div class="news">
+                                    <div class="content">
+                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere suscipit iste assumenda cupiditate dolores asperiores!
+                                    </div>
+                                    <div class="sub">
+                                        Lorem ipsum dolor sit amet.
+                                    </div>
+                                </div>
+                                <div class="options">
+                                    <div class="toolbar transparent fg-gray">
+                                        <button><i></i>Like</button>
+                                        <button><i></i>Share</button>
+                                        <button><i></i>Reblog</button>
+                                        <button><i></i>Comment</button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
