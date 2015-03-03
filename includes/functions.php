@@ -181,3 +181,50 @@ function esc_url($url) {
 		return $url;
 	}
 }
+
+
+
+/////////Load Posts
+
+function append_posts($type, $start)
+{
+	//type should be wither TREND, TIMELINE or BOOK
+
+
+
+	//Perform some Loop to read one by one.
+
+	$return_stmt = "";
+	$post_auther = 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sequi, dolorum.';
+	$post_title = 'Lorem ipsum dolor sit amet.';
+	$post_id = '4589';
+	$post_cont = 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eveniet, architecto!';
+
+
+	if($type == "TREND")
+	{
+		$post_title = $type . ': ' . $post_title;
+	}
+
+	$return_stmt = $return_stmt . '<div class="me_result">
+	        <div class="news">
+	            <div class="content">
+	                ' . $post_title . '
+	            </div>
+	            <div class="sub">
+	                ' . $post_cont . '
+	            </div>
+	        </div>
+	        <div class="options">
+	            <div class="toolbar transparent fg-gray">
+	                <button><i></i>Like</button>
+	                <button><i></i>Share</button>
+	                <button><i></i>Reblog</button>
+	                <button><i></i>Comment</button>
+	            </div>
+	        </div>
+	    </div>';
+
+	return $return_stmt;
+
+}

@@ -1,6 +1,7 @@
+<!DOCTYPE html>
+
 <?php
-include_once 'includes/db_connect.php';
-include_once 'includes/functions.php';
+include_once 'includes/index.inc.php';
  
 sec_session_start();
 
@@ -14,8 +15,6 @@ else
 }
 ?>
 
-
-<!DOCTYPE html>
 <html lang="en">
     <head>
         <title>Blog+Social</title>
@@ -40,6 +39,22 @@ else
         <!-- Local JavaScript -->
         <!--<script src="js/docs.js"></script>
         <script src="js/github.info.js"></script>-->
+<!-- 
+        <script>
+            function change_state(state, url)
+            {
+
+                var pass = document.createElement("input");
+                pass.name = "status";
+                pass.value = state;
+                pass.type = "hidden";
+                var form = document.getElementById("form");
+                form.appendChild(pass);
+                form.submit();
+            }
+        </script> -->
+
+
     </head>
     <body class="metro">
         <header class="bg-light">
@@ -54,7 +69,7 @@ else
                     <span class="element-divider"></span>
                     <?php
                         if ($login==true) {
-                            echo '  <div class="element place-right">
+                            echo  '<div class="element place-right">
                                         <a href="includes/logout.php"><span class="icon-switch"></span></a>
                                     </div>
                                     <div class="element place-right">
@@ -72,6 +87,17 @@ else
                         }
 
                     ?>
+
+                    <div class="element input-element place-right">
+                        <form action="">
+                            <div class="input-control text">
+                                <input type="text" placeholder="Search">
+                                <button class="btn-search"></button>
+                            </div>
+                        </form>
+                    </div>
+                    
+
                     <!-- <div class="element place-right">
                         <a href="#"><span class="icon-switch"></span></a>
                     </div>
@@ -93,10 +119,20 @@ else
             <div class="container">
                 <nav class="horizontal-menu">
                     <ul>
-                        <li><a href="#">Reader</a></li>
-                        <li><a href="#">Blogs</a></li>
-                        <li><a href="#">Following</a></li>
-                        <li><a href="#">Followers</a></li>
+                        <?php
+                            if($login == true)
+                            {
+                                echo    '<li><a href="index.php">Reader</a></li>
+                                        <li><a href="blog_list.php">Blogs</a></li>
+                                        <li><a href="#">Following</a></li>
+                                        <li><a href="#">Followers</a></li>';
+                            }
+                            else
+                            {
+                                echo '<li><a href="index.php">Reader</li>';
+                            }
+                        ?>
+                        
                     </ul>
                 </nav>
             </div>
@@ -107,34 +143,53 @@ else
                     <div class="row">
                         <div class="span4">
                             <nav class="sidebar light">
-
-
                                 <?php
+
+                                    $url = esc_url($_SERVER['PHP_SELF']);
+                                    //echo $status;
                                     if($login==true)
                                     {
-                                        echo '<ul>
-                                                <li class="title">Reader</li>
-                                                <li class="active">
-                                                    <a href="javascript:call_timeline();">
+                                        $timeline = "";
+                                        $trend = "";
+                                        $book = "";
+
+                                        if($status == "BOOK")
+                                        {
+                                            $book = 'class="active"';
+                                        }
+                                        else if($status == 'TREND')
+                                        {
+                                            $trend = 'class="active"';
+                                        }
+                                        else
+                                        {
+                                            $timeline = 'class="active"';
+                                        }
+                                        $print = "<ul>
+                                                <li class='title'>Reader</li>
+                                                <li " . $timeline . ">
+                                                    <a href='{$url}?status=TIMELINE'>
                                                         Timeline
                                                     </a>
                                                 </li>
-                                                <li>
-                                                    <a href="#">
+                                                <li " . $trend . ">
+                                                    <a href='{$url}?status=TREND'>
                                                         Trending
                                                     </a>
                                                 </li>
-                                                <li>
-                                                    <a href="#">Bookmarked</a>
+                                                <li " . $book . ">
+                                                    <a href='{$url}?status=BOOK'>Bookmarked</a>
                                                 </li>
-                                            </ul>';
+                                            </ul>";
+                                        echo $print;
                                     }
                                     else 
                                     {
-                                        echo '<ul>
-                                                <li class="title">Reader</li>
-                                                <li class="active"><a href="#">Trending</a></li>
-                                            </ul>';
+                                        $print = "<ul>
+                                                <li class='title'>Reader</li>
+                                                <li class='active'><a href='{$url}?status=TREND'>Trending</a></li>
+                                            </ul>";
+                                        echo $print;
                                     }
                                 ?>
                                 <!-- <ul>
@@ -160,125 +215,24 @@ else
                                 </ul> -->
                             </nav>
                         </div>
+                        <from id="form" action=<?php echo '"' . $url . '"'; ?> method="post"></from>
                         <div class="span8" lstyle="background-color: red">
-                            <h1>Timeline</h1>
+                            <h1>
+                                <?php
+                                    if($status == 'TREND')
+                                        echo 'Trending';
+                                    else if($status == 'TIMELINE')
+                                        echo 'Timeline';
+                                    else if ($status == 'BOOK') {
+                                        echo 'Bookmarked';
+                                    }
+                                ?>
+                            </h1>
 
                             <!--Results-->
-                            <div class="me_result" lstyle="background-color: green;">
-                                <div class="news">
-                                    <div class="content">
-                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere suscipit iste assumenda cupiditate dolores asperiores!
-                                    </div>
-                                    <div class="sub">
-                                        Lorem ipsum dolor sit amet.
-                                    </div>
-                                </div>
-                                <div class="options">
-                                    <div class="toolbar transparent fg-gray">
-                                        <button><i></i>Like</button>
-                                        <button><i></i>Share</button>
-                                        <button><i></i>Reblog</button>
-                                        <button><i></i>Comment</button>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="me_result" lstyle="background-color: green;">
-                                <div class="news">
-                                    <div class="content">
-                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere suscipit iste assumenda cupiditate dolores asperiores!
-                                    </div>
-                                    <div class="sub">
-                                        Lorem ipsum dolor sit amet.
-                                    </div>
-                                </div>
-                                <div class="options">
-                                    <div class="toolbar transparent fg-gray">
-                                        <button><i></i>Like</button>
-                                        <button><i></i>Share</button>
-                                        <button><i></i>Reblog</button>
-                                        <button><i></i>Comment</button>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="me_result" lstyle="background-color: green;">
-                                <div class="news">
-                                    <div class="content">
-                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere suscipit iste assumenda cupiditate dolores asperiores!
-                                    </div>
-                                    <div class="sub">
-                                        Lorem ipsum dolor sit amet.
-                                    </div>
-                                </div>
-                                <div class="options">
-                                    <div class="toolbar transparent fg-gray">
-                                        <button><i></i>Like</button>
-                                        <button><i></i>Share</button>
-                                        <button><i></i>Reblog</button>
-                                        <button><i></i>Comment</button>
-                                    </div>
-                                </div>
-                            </div>
-
-
-                            <div class="me_result" lstyle="background-color: green;">
-                                <div class="news">
-                                    <div class="content">
-                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere suscipit iste assumenda cupiditate dolores asperiores!
-                                    </div>
-                                    <div class="sub">
-                                        Lorem ipsum dolor sit amet.
-                                    </div>
-                                </div>
-                                <div class="options">
-                                    <div class="toolbar transparent fg-gray">
-                                        <button><i></i>Like</button>
-                                        <button><i></i>Share</button>
-                                        <button><i></i>Reblog</button>
-                                        <button><i></i>Comment</button>
-                                    </div>
-                                </div>
-                            </div>
-
-
-                            <div class="me_result" lstyle="background-color: green;">
-                                <div class="news">
-                                    <div class="content">
-                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere suscipit iste assumenda cupiditate dolores asperiores!
-                                    </div>
-                                    <div class="sub">
-                                        Lorem ipsum dolor sit amet.
-                                    </div>
-                                </div>
-                                <div class="options">
-                                    <div class="toolbar transparent fg-gray">
-                                        <button><i></i>Like</button>
-                                        <button><i></i>Share</button>
-                                        <button><i></i>Reblog</button>
-                                        <button><i></i>Comment</button>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="me_result" lstyle="background-color: green;">
-                                <div class="news">
-                                    <div class="content">
-                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere suscipit iste assumenda cupiditate dolores asperiores!
-                                    </div>
-                                    <div class="sub">
-                                        Lorem ipsum dolor sit amet.
-                                    </div>
-                                </div>
-                                <div class="options">
-                                    <div class="toolbar transparent fg-gray">
-                                        <button><i></i>Like</button>
-                                        <button><i></i>Share</button>
-                                        <button><i></i>Reblog</button>
-                                        <button><i></i>Comment</button>
-                                    </div>
-                                </div>
-                            </div>
+                            <?php
+                                echo $result;
+                            ?>
                         </div>
                     </div>
                 </div>
