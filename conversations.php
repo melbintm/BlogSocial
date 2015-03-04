@@ -1,8 +1,16 @@
 <!doctype html>
+
+<?php
+
+    include_once 'includes/functions.php';
+    include_once 'includes/conversations.inc.php';
+
+    $url = esc_url($_SERVER['PHP_SELF']);
+?>
 <html>
 	<head>
 		<title>
-			Messaging New
+			Messaging Conversation
 		</title>
 		<link href="css/metro-bootstrap.css" rel="stylesheet">
         <link href="css/metro-bootstrap-responsive.css" rel="stylesheet">
@@ -12,7 +20,9 @@
         <link rel="stylesheet" href="css/style.css">-->
 
         <!-- Load JavaScript Libraries -->
-        
+        <!--Conversation Bubble CSS -->
+        <!-- <link rel="stylesheet" href="css/conv.css"> -->
+
         <script type="text/JavaScript" src="js/sha512.js"></script>
         <script type="text/JavaScript" src="js/form.js"></script>
 
@@ -45,6 +55,14 @@
                     <div class="element place-right">
                         <a href="#"><span class="icon-mail"></span></a>
                     </div>
+                    <div class="element input-element place-right">
+                        <form>
+                            <div class="input-control text">
+                                <input type="text" placeholder="Search">
+                                <button class="btn-search"></button>
+                            </div>
+                        </form>
+                    </div>
 
                 </nav>
             </nav>
@@ -66,32 +84,53 @@
                         <div class="span4">
                             <nav class="sidebar light">
                                 <ul>
-                                    <li class="title">Messaging</li>
-                                    <li>
+                                    <?php
+                                        echo "  <li class='title'>Messaging</li>
+                                                <li {$message_class}>
+                                                    <a href='{$url}?link=CONV'>
+                                                        Conversations
+                                                    </a>
+                                                </li>
+                                                <li {$new_class}>
+                                                    <a href='{$url}?link=NEW'>
+                                                        New
+                                                    </a>
+                                                </li>";
+                                    ?>                                
+                                    <!-- <li class="title">Messaging</li>
+                                    <li class="active">
                                         <a href="#">
                                             Conversations
                                         </a>
                                     </li>
-                                    <li class="active">
+                                    <li>
                                         <a href="#">
                                             New
                                         </a>
-                                    </li>
+                                    </li> -->
                                 </ul>
                             </nav>
                         </div>
                         <div class="span8">
-                            <h1>New Message</h1>
-                            <form action="">
-                                <div class="input-control text">
-                                    <input type="text" value="" placeholder="To"/>
-                                    <button class="btn-clear"></button>
-                                </div>
-                                <div class="input-control textarea">
-                                      <textarea placeholder="Your message"></textarea>
-                                </div>
-                                <button>Send</button>
-                            </form>
+                        <h1>
+                            <?php
+                                echo $header;
+                            ?>
+                        </h1>
+                            
+                            <?php
+                                echo $result;
+                            ?>
+
+                            <!-- <div class="listview-outlook">
+                                <a href="#" class="list">
+                                    <div class="list-content">
+                                        <span class="list-title">melbin@live.com</span>
+                                        <span class="list-subtitle">3/3/2015</span>
+                                        <span class="list-remark">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis, dicta, delectus.</span>
+                                    </div>
+                                </a>
+                            </div> -->
                         </div>
                     </div>
                 </div>

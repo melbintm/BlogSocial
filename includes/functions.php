@@ -228,3 +228,46 @@ function append_posts($type, $start)
 	return $return_stmt;
 
 }
+
+
+
+/////////FInd the Name using id ////
+
+function find_name($mysqli, $user_id)
+{
+	$query = "SELECT first_name, last_name FROM
+				members WHERE id = ?";
+	$name = "";
+	error_log("The id : " . $user_id);
+	if($stmt = $mysqli->prepare($query))
+	{
+		$stmt->bind_param('i', $user_id);
+		if($stmt->execute())
+		{
+			$stmt->store_result();
+			error_log("FIND NAME: " . $stmt->num_rows);
+			if($stmt->num_rows == 1)
+			{
+				$stmt->bind_result($first_name, $last_name);
+				$stmt->fetch();
+				$name = $first_name . " " . $last_name;
+			}
+			else
+			{
+				$name = "ERROR1!";
+			}
+		}
+		else
+		{
+			$name = "ERROR2!";
+		}
+	}
+	else
+	{
+		error_log("FIND NAME " . $mysqli->error);
+	}
+	$stmt->close();
+	$mysqli->close();
+	return $name;
+
+}
