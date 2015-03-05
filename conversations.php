@@ -10,18 +10,17 @@
 <html>
 	<head>
 		<title>
-			Messaging Conversation
+			Conversations
 		</title>
 		<link href="css/metro-bootstrap.css" rel="stylesheet">
         <link href="css/metro-bootstrap-responsive.css" rel="stylesheet">
         <link href="css/iconFont.css" rel="stylesheet">
-        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-        <!--<link href="js/prettify/prettify.css" rel="stylesheet">
-        <link rel="stylesheet" href="css/style.css">-->
+        <!--<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">-->
+        <!--<link href="js/prettify/prettify.css" rel="stylesheet">-->
+
 
         <!-- Load JavaScript Libraries -->
         <!--Conversation Bubble CSS -->
-        <!-- <link rel="stylesheet" href="css/conv.css"> -->
 
         <script type="text/JavaScript" src="js/sha512.js"></script>
         <script type="text/JavaScript" src="js/form.js"></script>
@@ -33,6 +32,8 @@
 
         <!-- Metro UI CSS JavaScript plugins -->
         <script src="js/load-metro.js"></script>
+        <link rel="stylesheet" href="css/style.css">
+        <link rel="stylesheet" href="css/thread.css">
 
 	</head>
 	<body class="metro">
@@ -40,22 +41,42 @@
 			<nav class="navigation-bar dark">
 				<nav class="navigation-bar-content container">
                     <div class="element">
-                        <a href="#">
+                        <a href="index.php">
                             <span class="icon-grid-view"></span>
                             BLOG+SOCIAL
                         </a>
                     </div>
                     <span class="element-divider"></span>
-                    <div class="element place-right">
-                        <a href="#"><span class="icon-switch"></span></a>
-                    </div>
-                    <div class="element place-right">
-                        <a href="#"><span class="icon-cog"></span></a>
-                    </div>
-                    <div class="element place-right">
-                        <a href="#"><span class="icon-mail"></span></a>
-                    </div>
-                    <div class="element input-element place-right">
+
+                    <?php
+                        if ($login==true) {
+                            echo  "
+                                    <span class='element-divider place-right'></span>
+
+                                    
+
+                                    <div class='element place-right'>
+                                        <a href='includes/logout.php'><span class='icon-switch'></span></a>
+                                    </div>
+                                    <div class='element place-right'>
+                                        <a href='#'><span class='icon-cog'></span></a>
+                                    </div>
+                                    <div class='element place-right'>
+                                        <a href='conversations.php'><span class='icon-mail'></span></a>
+                                    </div>
+                                    <a class='element brand place-right fg-blue' href='#'>Hey, {$_SESSION['first_name']}!</span></a>";
+                        }
+                        else
+                        {
+                            echo '  <div class="element place-right">
+                                        <a href="login.php"><span class="icon-enter-2"></span></a>
+                                    </div>';
+                        }
+
+                    ?>
+
+
+                    <div class="element input-element">
                         <form>
                             <div class="input-control text">
                                 <input type="text" placeholder="Search">
@@ -85,10 +106,10 @@
                             <nav class="sidebar light">
                                 <ul>
                                     <?php
-                                        echo "  <li class='title'>Messaging</li>
+                                        echo "  <li class='title'>Conversations</li>
                                                 <li {$message_class}>
                                                     <a href='{$url}?link=CONV'>
-                                                        Conversations
+                                                        Threads
                                                     </a>
                                                 </li>
                                                 <li {$new_class}>
@@ -136,5 +157,10 @@
                 </div>
             </div>
 		</main>
+        <script>
+            $(document).ready(function(){
+                $(".me_message_holder").scrollTop(1000);
+            });
+        </script>
 	</body>
 </html> 

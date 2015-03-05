@@ -32,7 +32,7 @@ function sec_session_start() {
 function login($email, $password, $mysqli)
 {
 
-	if($stmt = $mysqli->prepare("SELECT id, username, password, salt
+	if($stmt = $mysqli->prepare("SELECT id, username, password, salt, first_name, last_name
 		FROM members
 		WHERE email = ?
 		LIMIT 1"))
@@ -42,7 +42,7 @@ function login($email, $password, $mysqli)
 		$stmt->execute();
 		$stmt->store_result();
 
-		$stmt->bind_result($user_id, $username, $db_password, $salt);
+		$stmt->bind_result($user_id, $username, $db_password, $salt, $first_name, $last_name);
 		$stmt->fetch();
 
 		$password = hash('sha512', $password . $salt);
@@ -64,6 +64,12 @@ function login($email, $password, $mysqli)
 
 					//XSS protection 
 					$username = preg_replace("/[^a-zA-Z0-9_\-]+/", "", $username);
+
+					$first_name = preg_replace("/[^a-zA-Z0-9_\-]+/", "", $first_name);
+					$last_name = preg_replace("/[^a-zA-Z0-9_\-]+/", "", $last_name);
+
+					$_SESSION['first_name'] = $first_name;
+					$_SESSION['last_name'] = $last_name;
 
 					$_SESSION['username'] = $username;
 					$_SESSION['login_string'] = hash('sha512', $password . $user_browser);
@@ -238,14 +244,14 @@ function find_name($mysqli, $user_id)
 	$query = "SELECT first_name, last_name FROM
 				members WHERE id = ?";
 	$name = "";
-	error_log("The id : " . $user_id);
+	//error_log("The id : " . $user_id);
 	if($stmt = $mysqli->prepare($query))
 	{
 		$stmt->bind_param('i', $user_id);
 		if($stmt->execute())
 		{
 			$stmt->store_result();
-			error_log("FIND NAME: " . $stmt->num_rows);
+			//error_log("FIND NAME: " . $stmt->num_rows);
 			if($stmt->num_rows == 1)
 			{
 				$stmt->bind_result($first_name, $last_name);
@@ -267,7 +273,117 @@ function find_name($mysqli, $user_id)
 		error_log("FIND NAME " . $mysqli->error);
 	}
 	$stmt->close();
-	$mysqli->close();
 	return $name;
+}
 
+
+function read_message($mysqli, $sender_id, $reciever_id)
+{
+	error_log("READ_MESSAGE: {$sender_id} {$reciever_id}");
+	$query = "UPDATE message set `read`='READ' WHERE reciever_id = {$reciever_id} AND sender_id = {$sender_id}";
+	$mysqli->query($query);
+	error_log($mysqli->error);
+}
+
+function find_username($mysqli, $user_id)
+{
+	$query = "SELECT username from members WHERE id=?";
+	$username = '';
+	if($stmt = $mysqli->prepare($query))
+	{
+		$stmt->bind_param('i', $user_id);
+		if($stmt->execute())
+		{
+			$stmt->store_result();
+			$stmt->bind_result($username);
+			$stmt->fetch();
+			error_log("FOUND USERNAME: {$username}");
+		}
+		$stmt->close();
+	}
+	return $username;
+}
+
+function is_msg_read($mysqli, $part_id, $user_id)
+{
+	$query = "	SELECT 
+				    sender_id, reciever_id, message.read
+				FROM
+				    message
+				WHERE
+				    (sender_id = ? AND reciever_id = ?)
+				        OR (sender_id = ? AND reciever_id = ?)
+				ORDER BY sent_date DESC
+				LIMIT 1;";
+	//error_log("Called");
+	if($stmt = $mysqli->prepare($query))
+	{
+		//error_log("Query prepared");
+		$stmt->bind_param('iiii', $user_id, $part_id, $part_id, $user_id);
+		$stmt->execute();
+		$stmt->store_result();
+		if($stmt->num_rows == 1)
+		{
+			//error_log("One row");
+			$stmt->bind_result($sender_id, $reciever_id, $read);
+			$stmt->fetch();
+			//error_log($sender_id . " " . $reciever_id . " " . $read);
+			if($sender_id == $user_id)
+			{
+				//error_log("READ1");
+				return "READ";
+			}
+			else if($read == "READ")
+			{
+				//error_log("READ2");
+				return "READ";
+			}
+			else
+			{
+				//error_log("NOTREAD");
+				return "NOTREAD";
+			}
+		}
+
+	}
+	else
+	{
+		error_log($mysqli->error);
+	}
+}
+
+function count_unread($mysqli, $part_id, $user_id)
+{
+	$query = "	SELECT 
+					count(*)
+				FROM
+					message
+				WHERE
+					(sender_id = ? AND reciever_id = ?) AND `read`='NOTREAD'
+				ORDER BY sent_date DESC;";
+	//error_log("Called");
+	if($stmt = $mysqli->prepare($query))
+	{
+		//error_log("Query prepared");
+		$stmt->bind_param('ii', $part_id, $user_id);
+		$stmt->execute();
+		$stmt->store_result();
+		if($stmt->num_rows == 1)
+		{
+			//error_log("One row");
+			$stmt->bind_result($count);
+			$stmt->fetch();
+			//error_log($sender_id . " " . $reciever_id . " " . $read);
+			return $count;
+		}
+		else
+		{
+			return 0;
+		}
+
+	}
+	else
+	{
+		error_log($mysqli->error);
+	}
 }

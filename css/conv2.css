@@ -2,7 +2,12 @@
 	font-size: 11pt;
 	color: #fefefe;
 	line-height: 120%;
-	margin-bottom: 25px;
+	margin-bottom: 15px;
+	max-width: 80%;
+	_min-width: 10%;
+	_display: table;
+    word-wrap: break-word;
+    word-break: break-word;
 }
 
 /*a:link {
@@ -25,13 +30,30 @@ a:active {
 
 /* DIVS */
 
+.clear
+{
+	clear: both;
+}
+
+
+.mel-outgoing
+{
+	_text-align: right;
+	float: right;
+	overflow: hidden;
+}
+
+
 .content-incoming, .context-incoming {
-	margin-right: 33%!important;
-	margin-left: 10px!important;
+	_margin-right: 33%!important;
 	color: #fefefe;
 	position:relative;
 	padding:15px;
-	margin:1em 0 3em;
+	margin:2em 0 2em 0;
+
+	clear: both;
+  	float: left;
+   	overflow: hidden;
 }
 
 .content-incoming, .content-incoming-next {
@@ -52,18 +74,19 @@ a:active {
 	padding-top: 8px;
 }
 
-.content-incoming:after {
+
+.conte-nt-incoming:after {
    content:"";
    display:block;
    position:absolute;
-   top:-15px;
+   bottom:-15px;
    left:15px;
    width:0;
    border-width:15px 15px 0;
    border-style:solid;
    border: 25px solid;  
-   border-color: transparent transparent transparent #6d9bb2;    
-   z-index: -1;                                                      
+   border-color: transparent transparent transparent #979797;    
+   z-index: -1;                                                     
 }
 
 .context-incoming:after {
@@ -75,19 +98,24 @@ a:active {
    width:0;
    border-width:15px 15px 0;
    border-style:solid;
-   border: 25px solid;  
+   _border: 25px solid;  
    border-color: transparent transparent transparent #979797;    
-   z-index: -1;                                                      
+   z-index: -1;                                                   
 }
 
 .content-outgoing, .context-outgoing {
-	margin-left: 33%!important;
-	margin-right: 10px!important;
+	text-align: right;
+	_margin-left: 33%!important;
 	color: #fefefe;
 	position:relative;
 	padding:15px;
 	margin:1em 0 3em;
 	text-align: right;
+
+
+	clear: both;
+	float: right;
+	overflow: hidden;
 }
 
 .content-outgoing {
@@ -114,7 +142,7 @@ a:active {
    border-style:solid;
    border: 25px solid;  
    border-color: transparent #67af41 transparent transparent;    
-   z-index: -1;                                                      
+   z-index: -1;                                                    
 }
 
 .context-outgoing:after {

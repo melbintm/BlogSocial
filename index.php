@@ -61,7 +61,7 @@ else
             <nav class="navigation-bar dark">
                 <nav class="navigation-bar-content container">
                     <div class="element">
-                        <a href="#">
+                        <a href="index.php">
                             <span class="icon-grid-view"></span>
                             BLOG+SOCIAL
                         </a>
@@ -76,8 +76,9 @@ else
                                         <a href="#"><span class="icon-cog"></span></a>
                                     </div>
                                     <div class="element place-right">
-                                        <a href="#"><span class="icon-mail"></span></a>
-                                    </div>';
+                                        <a href="conversations.php"><span class="icon-mail"></span></a>
+                                    </div>' . "
+                                    <a class='element brand place-right fg-blue' href='#'>Hey, {$_SESSION['first_name']}!</span></a>";
                         }
                         else
                         {

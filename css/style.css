@@ -27,3 +27,20 @@
   padding: 8px;
   background-color: #BCD3CD;
 }
+
+
+.me_message_holder
+{
+
+  font: 10pt "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;
+  width: 100%;
+  height: 500px;
+  _background-color: red;
+  overflow: auto;
+  overflow-x: hidden;
+}
+
+.me_wr
+{
+  word-wrap: normal;
+}

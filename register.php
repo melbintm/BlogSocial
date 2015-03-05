@@ -86,13 +86,13 @@
                         <input type="text" name="email" id="email">
                     </div>
                     <label for="password">Create password</label>
-                    <div class="input-control text size6">
-                        <input type="text" name="password" id="password">
+                    <div class="input-control password size6">
+                        <input type="password" name="password" id="password">
                     </div>
 
                     <label for="confirmpwd">Reenter password</label>
-                    <div class="input-control text size6">
-                        <input type="text" name="confirmpwd" id="confirmpwd">
+                    <div class="input-control password size6">
+                        <input type="password" name="confirmpwd" id="confirmpwd">
                     </div>
                     
                     <label for="">Birthdate</label>
